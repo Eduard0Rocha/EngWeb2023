@@ -11,6 +11,8 @@ f.close()
 cidades = mapa["cidades"]
 cidades.sort(key=ordCidade)
 
+ligacoes = mapa["ligações"]
+
 distritos = list(set([x["distrito"] for x in cidades]))
 distritos.sort()
 
@@ -63,6 +65,40 @@ def geraFichIndexHTML():
 
     f.close()
 
+def procura_destinos(origem):
+
+    res = list()
+
+    for l in ligacoes:
+
+        if (l['origem'] == origem):
+
+            res.append((l['destino'],l['distância']))
+
+    return res
+
+def id_to_nome(id):
+
+    for c in cidades:
+
+        if (c['id'] == id):
+
+            return c['nome']
+
+    return None
+
+def html_destinos_conectados(id):
+
+    res = f"<p><b>Destinos proximos:</b></p>"
+
+    destinos_ids_dist = procura_destinos(id)
+
+    for dest in destinos_ids_dist:
+
+        res += f"<p><a href=/{dest[0]}>{id_to_nome(dest[0])}</a>: {dest[1]}</p>"
+
+    return res
+
 def geraHTMLCidade(cidade):
 
     res = f"""
@@ -79,6 +115,7 @@ def geraHTMLCidade(cidade):
     <p>População: {cidade['população']}</p>
     <p>Descrição: {cidade['descrição']}</p>
     <p>Distrito: {cidade['distrito']}</p>
+    {html_destinos_conectados(cidade['id'])}
     <p><a href='/'>[Voltar]</a></p>
 </body>
 </html>
