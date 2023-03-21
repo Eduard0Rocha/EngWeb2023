@@ -1,0 +1,38 @@
+extends layout
+
+block content
+  div.w3-card-4
+    div.w3-container.w3-green
+      h2 TO DO List
+    form.w3-container(method="POST")
+      label UserName
+      input.w3-input(type="text" name="who" id="what")
+      label Task
+      input.w3-input(type="text" name="what" id="what")
+      button.w3-btn.w3-purple.w3-mb-2(type="submit") Add
+  div.w3-container.w3-red.w3-cell
+    h1 TODO
+    each task in todo
+      .w3-container
+          .w3-panel.w3-pale-green.w3-bottombar.w3-border-green.w3-border      
+            p Person: #{task.who}
+            p Description: #{task.what} 
+            .w3-right-align  
+              button.w3-button.w3-grey.w3-hover-red.w3-card-4(type="submit" form="complete"+task.id) Complete
+              form(id="complete"+task.id method="POST" action="complete")
+                input(type="hidden" name="id" value=task.id)
+                input(type="hidden" name="who" value=task.who)
+                input(type="hidden" name="what" value=task.what)
+                input(type="hidden" name="done" value="true")
+
+  div.w3-container.w3-green.w3-cell
+    h1 DONE
+    each task in done
+      .w3-container
+          .w3-panel.w3-pale-green.w3-bottombar.w3-border-green.w3-border      
+            p Person: #{task.who}
+            p Description: #{task.what} 
+            .w3-right-align  
+              button.w3-button.w3-grey.w3-hover-red.w3-card-4(type="submit" form="delete"+task.id) Delete
+              form(id="delete"+task.id method="POST" action="delete")
+                input(type="hidden" name="id" value=task.id)
