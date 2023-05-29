@@ -1,0 +1,64 @@
+use EMD;
+
+Query 1
+
+Comando: db.exames.count();
+Resultado: 300
+
+Query 2
+
+Comando: db.exames.count({resultado: true});
+Resultado: 138
+
+Query 3
+
+Comando: 
+
+db.exames.aggregate([
+  { $group: { _id: "$género", total: { $sum: 1 } } }
+]);
+
+Resultado: 
+
+{ "_id" : "F", "total" : 142 }
+{ "_id" : "M", "total" : 158 }
+
+Query 4
+
+Comando:
+
+db.exames.aggregate([
+  { $group: { _id: "$modalidade", total: { $sum: 1 } } }
+]);
+
+Resultado: 
+
+{ "_id" : "Ciclismo", "total" : 18 }
+{ "_id" : "SUP", "total" : 16 }
+{ "_id" : "Karaté", "total" : 15 }
+{ "_id" : "Orientação", "total" : 19 }
+{ "_id" : "Basquetebol", "total" : 13 }
+{ "_id" : "BTT", "total" : 18 }
+{ "_id" : "Futebol", "total" : 24 }
+{ "_id" : "Equitação", "total" : 13 }
+{ "_id" : "Atletismo", "total" : 18 }
+{ "_id" : "Dança", "total" : 17 }
+{ "_id" : "Parapente", "total" : 19 }
+{ "_id" : "Andebol", "total" : 18 }
+{ "_id" : "Esgrima", "total" : 20 }
+{ "_id" : "Triatlo", "total" : 23 }
+{ "_id" : "Badminton", "total" : 21 }
+{ "_id" : "Patinagem", "total" : 18 }
+{ "_id" : "Ténis", "total" : 10 }
+
+Query 5
+
+Comando: db.exames.countDocuments({federado: true});
+
+Resultado: 143
+
+Query 6
+
+Comando: db.exames.countDocuments({género: "F", modalidade: "Triatlo"});
+
+Resultado: 9
